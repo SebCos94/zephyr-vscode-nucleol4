@@ -1,0 +1,152 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"terminal.integrated.env.osx": {
+			"PATH": "$HOME/zephyrproject/zephyr/scripts",
+			"ZEPHYR_BASE": "${env:HOME}/zephyrproject/zephyr"
+		},
+		"terminal.integrated.env.linux": {
+			"PATH": "$HOME/zephyrproject/zephyr/scripts:${env:PATH}",
+			"ZEPHYR_BASE": "${env:HOME}/zephyrproject/zephyr"
+		},
+		"terminal.integrated.env.windows": {
+			"PATH": "${env:USERPROFILE}\\zephyrproject\\zephyr\\scripts;${env:PATH}",
+			"ZEPHYR_BASE": "${env:USERPROFILE}\\zephyrproject\\zephyr"
+		},
+		"files.associations": {},
+		// Hush CMake
+		"cmake.configureOnOpen": false,
+
+		// IntelliSense
+		"C_Cpp.default.compilerPath": "${userHome}/zephyr-sdk-0.17.0/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc",
+		"C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "West Build",
+				"type": "shell",
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				},
+				"linux": {
+					"command": "${userHome}/zephyrproject/.venv/bin/west"
+				},
+				"windows": {
+					"command": "${userHome}/zephyrproject/.venv/Scripts/west.exe"
+				},
+				"osx": {
+					"command": "${userHome}/zephyrproject/.venv/bin/west"
+				},
+				"args": [
+					"build",
+					"-p",
+					"auto",
+					"-b",
+					"nucleo_l476rg"
+				],
+				"problemMatcher": [
+					"$gcc"
+				]
+			},
+			{
+				"label": "West Configurable Build",
+				"type": "shell",
+				"group": {
+					"kind": "build",
+				},
+				"linux": {
+					"command": "${userHome}/zephyrproject/.venv/bin/west"
+				},
+				"windows": {
+					"command": "${userHome}/zephyrproject/.venv/Scripts/west.exe"
+				},
+				"osx": {
+					"command": "${userHome}/zephyrproject/.venv/bin/west"
+				},
+				"args": [
+					"build",
+					"-p",
+					"${input:pristine}",
+					"-b",
+					"${input:board}"
+				],
+				"problemMatcher": [
+					"$gcc"
+				]
+			},
+			{
+				"label": "West Flash",
+				"type": "shell",
+				"linux": {
+					"command": "${userHome}/zephyrproject/.venv/bin/west"
+				},
+				"windows": {
+					"command": "${userHome}/zephyrproject/.venv/Scripts/west.exe"
+				},
+				"osx": {
+					"command": "${userHome}/zephyrproject/.venv/bin/west"
+				},
+				"args": [
+					"flash"
+				],
+				"problemMatcher": [
+					"$gcc"
+				]
+			}
+		],
+		"inputs": [
+			{
+				"id": "board",
+				"type": "promptString",
+				"default": "nucleo_l476rg",
+				"description": "See https://docs.zephyrproject.org/latest/boards/index.html"
+			},
+			{
+				"id": "pristine",
+				"type": "pickString",
+				"description": "Choose when to run a pristine build",
+				"default": "auto",
+				"options": [
+					"auto",
+					"always",
+					"never"
+				]
+			}
+		]
+	},
+	"launch":{
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Launch",
+				"device": "nucleo_l476rg",
+				"cwd": "${workspaceFolder}",
+				"executable": "build/zephyr/zephyr.elf",
+				"request": "launch",
+				"type": "cortex-debug",
+				"runToEntryPoint": "main",
+				"servertype": "stlink",
+				"gdbPath": "${userHome}/zephyr-sdk-0.17.0/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+				"preLaunchTask": "West Build"
+			},
+			{
+				"name": "Attach",
+				"device": "nucleo_l476rg",
+				"cwd": "${workspaceFolder}",
+				"executable": "build/zephyr/zephyr.elf",
+				"request": "attach",
+				"type": "cortex-debug",
+				"runToEntryPoint": "main",
+				"servertype": "stlink",
+				"gdbPath": "${userHome}/zephyr-sdk-0.17.0/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb"
+			},
+		]
+	}
+}
