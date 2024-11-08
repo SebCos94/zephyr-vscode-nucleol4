@@ -148,15 +148,5 @@
 				"gdbPath": "${userHome}/zephyr-sdk-0.17.0/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb"
 			},
 		]
-	},
-	"extensions": {
-		"recommendations": [
-			"ms-vscode.cpptools-extension-pack",
-			"ms-python.python",
-			"ms-vscode.vscode-embedded-tools",
-			"ms-vscode.vscode-serial-monitor",
-			"marus25.cortex-debug",
-			"donjayamanne.python-environment-manager"
-		]
 	}
 }
