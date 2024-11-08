@@ -17,7 +17,9 @@
 			"PATH": "${env:USERPROFILE}\\zephyrproject\\zephyr\\scripts;${env:PATH}",
 			"ZEPHYR_BASE": "${env:USERPROFILE}\\zephyrproject\\zephyr"
 		},
-		"files.associations": {},
+		"files.associations": {
+			"printk.h": "c"
+		},
 		// Hush CMake
 		"cmake.configureOnOpen": false,
 
@@ -77,6 +79,31 @@
 					"${input:pristine}",
 					"-b",
 					"${input:board}"
+				],
+				"problemMatcher": [
+					"$gcc"
+				]
+			},
+			{
+				"label": "West KConfig GUI",
+				"type": "shell",
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				},
+				"linux": {
+					"command": "${userHome}/zephyrproject/.venv/bin/west"
+				},
+				"windows": {
+					"command": "${userHome}/zephyrproject/.venv/Scripts/west.exe"
+				},
+				"osx": {
+					"command": "${userHome}/zephyrproject/.venv/bin/west"
+				},
+				"args": [
+					"build",
+					"-t",
+					"guiconfig",
 				],
 				"problemMatcher": [
 					"$gcc"
