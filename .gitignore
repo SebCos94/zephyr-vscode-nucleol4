@@ -52,6 +52,7 @@ doc/doc.warnings
 .settings
 .envrc
 .vscode
+.history
 hide-defaults-note
 venv
 .venv
